@@ -56,9 +56,10 @@ _message_after_copy: |
   1. Change directory to the docs folder:
 
     $ cd {{ project_name }}/docs
-
-  2. Copy site id from _publish.yml to a NETLIFY_SITE_ID secret for github "repo"
-  3. Do an initial commit 
+  2. Do an initial publish: 
+    $ quarto publish netlify
+  3. Copy site id from _publish.yml to a NETLIFY_SITE_ID secret for github "repo"
+  4. Do an initial commit 
 
 # Hooks
 _tasks:
@@ -67,11 +68,6 @@ _tasks:
   - ["git", "remote", "add", "origin", "git@github.com:{{gh_organisation}}/{{project_name}}.git"]
   - ["uv", "sync"]
   - ["uv", "run", "pre-commit", "install"]
-  - command: ["uv", "run", "quartodoc", "build"]
-    working_director: "docs"
-  - command: ["quarto", "render"]
-    working_director: "docs"
-  - command: ["quarto", "publish", "netlify"]
-    working_directory: "docs"
+  - ["uv", "run", "invoke", "docs"]
   
   

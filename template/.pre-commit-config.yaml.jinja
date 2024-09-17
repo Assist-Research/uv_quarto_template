@@ -36,3 +36,10 @@ repos:
         entry: "uv run pytest"
         types: [python]
         pass_filenames: false
+      - id: quartodoc
+        name: quartodoc
+        stages: [commit]
+        language: system
+        entry: "cd docs && uv run quartodoc build"
+        types: [python]
+        pass_filenames: false
