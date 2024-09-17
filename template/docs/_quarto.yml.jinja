@@ -1,0 +1,60 @@
+project:
+  type: website
+  output-dir: ../_site
+
+website: 
+  title: "{{project_name}}"
+  navbar:
+    search: true
+    left:
+      - href: index.qmd
+        text: Home
+      - href: reference/index.qmd
+        text: Reference
+    tools:
+      - icon: github
+      - href: "https://github.com/{{gh_organisation}}/{{project_name}}"
+  sidebar:
+    - id: home
+      title: "Home"
+      style: "docked"
+      collapse-level: 2
+      align: left
+      contents:
+        - /index.qmd
+        - text: "Reference"
+          href: reference
+
+
+metadata-files: 
+  - reference/_sidebar.yml
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: {{project_name}}
+  style: pkgdown
+  dir: reference
+  parser: google
+  title: Reference
+  
+  # write sidebar data to this file
+  sidebar: reference/_sidebar.yml
+
+  sections:
+    - title: CLI
+      desc: CLI entry point
+      package: "pm_test.cli"
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        - main
+
+execute:
+  freeze: auto
+
+format:
+  html:
+    theme: pulse
+    css: /styles.css
+    html-math-method: katex
+    toc: true

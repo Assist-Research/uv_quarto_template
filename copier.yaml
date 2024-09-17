@@ -1,0 +1,77 @@
+_subdirectory: template
+
+# Questions
+project_name:
+  type: str
+  help: "What is the name of the project?"
+
+project_display_name:
+  type: str
+  help: "What is the display name of the project?"
+
+short_description:
+  type: str
+  help: "Give a short description of the project."
+
+author_name:
+  type: str
+  help: "What is the name of the author?"
+  default: "Dave Hastie"
+
+author_email:
+  type: str
+  help: "What is the email of the author?"
+  default: "dh@assistresearch.io"
+
+copyright:
+  type: str
+  choices:
+    - "{{author_name}}"
+    - "Assist Research"
+  default: "{{author_name}}"
+
+gh_organisation:
+  type: str
+  choices:
+    - "davehastie"
+    - "assist-research"
+  default: "davehastie"
+
+python_version:
+  type: str
+  help: "Which python version would you like to use?"
+  default: "3.12.6"
+
+python_min_version:
+  type: str
+  help: "What is the minimum python version required"
+  default: "3.12"
+
+
+_message_after_copy: |
+  Your project "{{ project_name }}" has been created successfully!
+
+  Next steps:
+
+  1. Change directory to the docs folder:
+
+    $ cd {{ project_name }}/docs
+
+  2. Copy site id from _publish.yml to a NETLIFY_SITE_ID secret for github "repo"
+  3. Do an initial commit 
+
+# Hooks
+_tasks:
+  - ["git", "init"]
+  - ["gh", "repo", "create", "{{gh_organisation}}/{{project_name}}", "--private", "-d", '"{{short_description}}"']
+  - ["git", "remote", "add", "origin", "git@github.com:{{gh_organisation}}/{{project_name}}.git"]
+  - ["uv", "sync"]
+  - ["uv", "run", "pre-commit", "install"]
+  - command: ["uv", "run", "quartodoc", "build"]
+    working_director: "docs"
+  - command: ["quarto", "render"]
+    working_director: "docs"
+  - command: ["quarto", "publish", "netlify"]
+    working_directory: "docs"
+  
+  

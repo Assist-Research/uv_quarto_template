@@ -1,0 +1,38 @@
+repos:
+  - repo: local
+    hooks:
+      - id: bandit
+        name: bandit
+        stages: [commit]
+        language: system
+        entry: "uv run bandit -r {{project_name}} -ll"
+        types: [python]
+        pass_filenames: false
+      - id: pyright
+        name: pyright
+        stages: [commit]
+        language: system
+        entry: "uv run pyright"
+        types: [python]
+        pass_filenames: false
+      - id: ruff-check
+        name: ruff-check
+        stages: [commit]
+        language: system
+        entry: "uv run ruff check . --fix"
+        types: [python]
+        pass_filenames: false
+      - id: ruff-format
+        name: ruff-format
+        stages: [commit]
+        language: system
+        entry: "uv run ruff format ."
+        types: [python]
+        pass_filenames: false
+      - id: pytest
+        name: pytest
+        stages: [commit]
+        language: system
+        entry: "uv run pytest"
+        types: [python]
+        pass_filenames: false
