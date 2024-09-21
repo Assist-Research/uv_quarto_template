@@ -66,7 +66,7 @@ _tasks:
   - ["git", "init"]
   - ["gh", "repo", "create", "{{gh_organisation}}/{{project_name}}", "--private", "-d", '"{{short_description}}"']
   - ["git", "remote", "add", "origin", "git@github.com:{{gh_organisation}}/{{project_name}}.git"]
-  - ["uv", "sync", "--python", "python_version"]
+  - ["uv", "sync", "--python", "{{python_version}}"]
   - ["uv", "run", "pre-commit", "install"]
   - ["uv", "run", "invoke", "docs"]
   
