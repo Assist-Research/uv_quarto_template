@@ -1,0 +1,19 @@
+# Contributing
+
+## Tooling
+This package makes use of [uv](https://docs.astral.sh/uv/) for builds. 
+It also makes heavy use of linting, formatting and type checking tools in development.
+
+To install this package locally for development it is assumed that you have `uv` installed. 
+Assuming that is the case follow these steps:
+
+1. `git clone git@github.com:{{gh_organisation}}/{{project_name}}.git`
+1. `cd {{project_name}}`
+1. `uv sync --python {{python_version}}`
+1. `uv run pre-commit install`
+
+This last step is optional, but if you are committing any code, we strongly recommend setting up git pre-commit to run checks automatically
+at the time of commit.
+
+## Testing
+Tests can be run using `uv run pytest`
